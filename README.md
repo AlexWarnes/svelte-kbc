@@ -2,6 +2,8 @@
 
 Configure keyboard inputs for any Svelte app.
 
+[Example REPL](https://svelte.dev/repl/453f33158ded4d4a8498b6082b37d90a?version=3.52.0) 
+
 # Getting Started
 
 Create an array of controls with a name and key(s).

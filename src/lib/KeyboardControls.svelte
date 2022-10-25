@@ -16,7 +16,7 @@
 	let derivedControls: { [key: string]: Readable<boolean> } = {};
 	let integralKeys: { [key: string]: Writable<boolean> } = {};
 	let activeCombo: boolean = false;
-
+  const sep: string = '%idx%'
 	function initControls(c: KeyboardControl[]) {
 		for (let control of c) {
 			for (let keyIdx = 0; keyIdx < control.keys.length; keyIdx++) {
@@ -31,7 +31,7 @@
 						}
 						derivedArr.push(integralKeys[ik]);
 					});
-					derivedControls[`${control.name}_${keyIdx}`] = derived(derivedArr, (integrals) =>
+					derivedControls[`${control.name}${sep}${keyIdx}`] = derived(derivedArr, (integrals) =>
 						integrals.every((v) => !!v)
 					);
 				}
@@ -70,7 +70,7 @@
 
 	$: if (Object.keys(derivedControls).length) {
 		Object.entries(derivedControls).forEach(([controlName, derivedStatus]) => {
-			const formattedName = controlName.split('_')[0];
+			const formattedName = controlName.split(sep)[0];
 			unsubs.push(
 				derivedStatus.subscribe((status) => {
 					activeCombo = status;
