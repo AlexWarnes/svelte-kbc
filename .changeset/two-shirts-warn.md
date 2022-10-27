@@ -1,0 +1,5 @@
+---
+'svelte-kbc': patch
+---
+
+testing
