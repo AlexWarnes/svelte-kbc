@@ -9,15 +9,23 @@ on:
       - main
 
 jobs:
-  build:
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
-      - run: npm run build
+          
+      - name: Install (npm ci)
+        run: npm ci
+        
+      - name: Package
+        run: npm run build
 
 #   publish-npm:
 #     needs: build
@@ -29,7 +37,7 @@ jobs:
 #           node-version: 16
 # #           registry-url: https://registry.npmjs.org/
 
-      - name: Create Release Pull Request or Publish to npm
+      - name: Create Release and Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
