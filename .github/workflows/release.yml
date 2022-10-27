@@ -4,7 +4,7 @@
 name: Release
 
 on:
-  release:
+  push:
     branches:
       - main
 
@@ -17,17 +17,17 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npm run package
+      - run: npm run build
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-#           registry-url: https://registry.npmjs.org/
+#   publish-npm:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 16
+# #           registry-url: https://registry.npmjs.org/
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
