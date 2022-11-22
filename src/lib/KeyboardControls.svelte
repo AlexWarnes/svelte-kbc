@@ -40,8 +40,10 @@
 		}
 	}
 
-	function updateKeyboardControls(controlName: string, status: boolean) {
+	function updateKeyboardControls(controlName: string, status: boolean, event: any = null) {
 		if (controls[controlName]) {
+			if (status && event) event.preventDefault();
+
 			controls[controlName].set(status);
 		}
 	}
@@ -56,12 +58,24 @@
 		const value: string = evt[eventProperty];
 
 		if (integralKeys[value]) {
+			/**
+			 * TODO: This isn't great. It prevents default behavior if any part of a 
+			 * provided key combo is pressed. 
+			 * 
+			 * For example if "Control + a" has a default behavior,
+			 * and a configured combo is "Control + f" this will block the "Control + a"
+			 * behavior as soon as Control is pressed.
+			 * 
+			 * Perhaps need to get rid of these combo derived stores and let that be solved
+			 * in userland with if ($Control && $f) though that might not solve the problem either.
+			 * More testing required.
+			 * */ 
+			evt.preventDefault();
 			integralKeys[value].set(status);
 		}
 
 		if (!activeCombo) {
-			evt.preventDefault();
-			updateKeyboardControls(keycodeToControlName[value], status);
+			updateKeyboardControls(keycodeToControlName[value], status, evt);
 		}
 	}
 
