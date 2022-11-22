@@ -60,6 +60,7 @@
 		}
 
 		if (!activeCombo) {
+			evt.preventDefault();
 			updateKeyboardControls(keycodeToControlName[value], status);
 		}
 	}
@@ -86,8 +87,8 @@
 </script>
 
 <svelte:window
-	on:keydown|preventDefault={(evt) => handleKeys(evt, true)}
-	on:keyup|preventDefault={(evt) => handleKeys(evt, false)}
+	on:keydown={(evt) => handleKeys(evt, true)}
+	on:keyup={(evt) => handleKeys(evt, false)}
 />
 
 <slot />
