@@ -1,5 +1,11 @@
 # svelte-kbc
 
+## 0.0.7
+
+### Patch Changes
+
+- 103fffa: Fix preventDefault and add test page
+
 ## 0.0.6
 
 ### Patch Changes
