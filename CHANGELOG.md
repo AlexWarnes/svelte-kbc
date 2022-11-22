@@ -1,5 +1,11 @@
 # svelte-kbc
 
+## 0.0.6
+
+### Patch Changes
+
+- 1d4887d: Only preventDefault on active control keys to avoid preventing all default behavior
+
 ## 0.0.5
 
 ### Patch Changes
