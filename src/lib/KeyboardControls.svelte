@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { BROWSER } from 'esm-env';
 	import { setContext, getContext, onDestroy, tick } from 'svelte';
-	import { writable, type Writable, type Readable } from 'svelte/store';
+	import { writable, } from 'svelte/store';
 	import type { KeyboardControl } from './models';
 
 	export let config: KeyboardControl[] = [];
@@ -18,7 +18,7 @@
 	let eventTimerIDs: any = {};
 
 	const sep: string = '%idx%';
-	
+
 	function initControls(c: KeyboardControl[]) {
 		for (let control of c) {
 			// Configure key stores
@@ -61,7 +61,7 @@
 	}
 
 	function debounceEventNullification(controlName: string): void {
-		if (!browser) return;
+		if (!BROWSER) return;
 
 		// Each control needs to be debounced/cleared individually
 		if (eventTimerIDs[controlName]) clearTimeout(eventTimerIDs[controlName]);
@@ -74,7 +74,7 @@
 
 	function handleKeys(evt: any, status: boolean) {
 		// avoid blocking default meta shortcuts (not sure if we need this for ctrl)
-		if (evt.metaKey) return
+		if (evt.metaKey) return;
 
 		if (debug) {
 			console.log({

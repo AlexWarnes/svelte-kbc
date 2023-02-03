@@ -1,6 +1,6 @@
-import { browser, prerendering } from '$app/environment';
+import { BROWSER, } from 'esm-env';
 import { tick } from 'svelte';
-import { readable, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 // TODO: This doesn't work if the dom content hasn't loaded yet, which can be confusing
 const createStoreFromEvent = (event: string, elementID: string | null) => {
@@ -19,7 +19,7 @@ const createStoreFromEvent = (event: string, elementID: string | null) => {
 			set(evt);
 			debounce();
 		};
-		if (browser) {
+		if (BROWSER) {
 			if (elementID) {
 				const element = document.querySelector(elementID);
 				if (element) {
@@ -30,7 +30,7 @@ const createStoreFromEvent = (event: string, elementID: string | null) => {
 			}
 		}
 		return () => {
-			if (browser) {
+			if (BROWSER) {
 				if (elementID) {
 					const element = document.querySelector(elementID);
 					if (element) {
