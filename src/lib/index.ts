@@ -1,10 +1,25 @@
 import KeyboardControls from './KeyboardControls.svelte';
 import { useKeyboardControls } from './hooks';
-import type { KeyConfig, KeyboardControl } from './models';
+import { wasdConfig, alphaConfig, numericConfig } from './keyConfigs';
+import { readableEvent } from './creators';
+import type {
+	KeyConfig,
+	KeyboardControl,
+	WASDNameMap,
+	AlphaNameMap,
+	NumericNameMap
+} from './models';
 
 export {
-  KeyboardControls,
-  useKeyboardControls,
-  KeyboardControl,
-  KeyConfig,
-}
+	KeyboardControls,
+	useKeyboardControls,
+	KeyboardControl,
+	KeyConfig,
+	wasdConfig,
+	alphaConfig,
+	numericConfig,
+	readableEvent,
+	WASDNameMap,
+	AlphaNameMap,
+	NumericNameMap
+};
