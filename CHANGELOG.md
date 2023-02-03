@@ -4,7 +4,8 @@
 
 ### Minor Changes
 
-- 12a4844: - Add event support to config
+- 12a4844: 
+  - Add event support to config
   - Add predefined config templates (wasd, alpha, numeric)
   - **BREAKING:** deprecate config-based key combinations
   - update readme
