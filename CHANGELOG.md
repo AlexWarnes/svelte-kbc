@@ -1,10 +1,16 @@
 # svelte-kbc
 
+## 0.1.1
+
+### Patch Changes
+
+- 61b7bef: support BROWSER check with esm-env
+
 ## 0.1.0
 
 ### Minor Changes
 
-- 12a4844: 
+- 12a4844:
   - Add event support to config
   - Add predefined config templates (wasd, alpha, numeric)
   - **BREAKING:** deprecate config-based key combinations
