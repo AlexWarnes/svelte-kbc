@@ -2,7 +2,7 @@
 
 Configure stores for keyboard inputs and events in any Svelte app.
 
-[Example REPL](https://svelte.dev/repl/453f33158ded4d4a8498b6082b37d90a?version=3.52.0) 
+[Example on StackBlitz](https://stackblitz.com/edit/example-svelte-kbc?file=README.md) 
 
 # Getting Started
 
