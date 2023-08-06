@@ -1,11 +1,14 @@
-export type KeyConfig = string | string[];
-export type KbcEvent = 'click' | 'pointerdown' | 'pointerup' | 'touchstart' | 'touchend' | 'scroll'
+import { writable, type Writable } from 'svelte/store';
+import { wasdConfig } from './keyConfigs';
 
-export interface KeyboardControl {
-	name: string;
-	keys?: KeyConfig[];
-	events?: KbcEvent[];
-}
+export type KeyConfig = string | string[];
+export type KbcEvent = 'click' | 'pointerdown' | 'pointerup' | 'touchstart' | 'touchend' | 'scroll';
+
+export type KeyboardControl = {
+	readonly name: string;
+	readonly keys?: KeyConfig[];
+	readonly events?: KbcEvent[];
+};
 export interface WASDNameMap {
 	w?: string;
 	a?: string;
@@ -54,3 +57,17 @@ export interface NumericNameMap {
 	key8?: string;
 	key9?: string;
 }
+
+export type Controls = {
+	[key: string]: Writable<boolean | Event>;
+};
+
+export type UseKeyboardControlsConfig = readonly Pick<KeyboardControl, 'name'>[];
+
+export type ControlsContext = {
+	controls: Controls;
+};
+
+export type UseKeyboardControls<T extends UseKeyboardControlsConfig> = {
+	[E in T as E[number]['name']]: Writable<boolean | Event>;
+};

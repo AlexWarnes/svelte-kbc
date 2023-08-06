@@ -4,6 +4,7 @@
 	import KeyboardControls from '$lib/KeyboardControls.svelte';
 	import { alphaConfig, numericConfig, wasdConfig } from '$lib/keyConfigs';
 	import TestingAlphaConfig from '$lib/Testing_alphaConfig.svelte';
+	import TestingCustom from '$lib/Testing_custom.svelte';
 	import Testing_Events from '$lib/Testing_Events.svelte';
 	import TestingNumericConfig from '$lib/Testing_numericConfig.svelte';
 	import TestingWasdConfig from '$lib/Testing_wasdConfig.svelte';
@@ -14,10 +15,14 @@
 		{ name: 'Pointer_Up', events: ['pointerup'] },
 		{ name: 'Touch_Start', events: ['touchstart'] },
 		{ name: 'Touch_End', events: ['touchend'] },
-		{ name: 'SCROLL', events: ['scroll'] },
+		{ name: 'SCROLL', events: ['scroll'] }
 		// { name: 'metaY', keys: ['y'] , preventDefault: true }
 	];
 
+	const customConfig = [
+		{ name: 'reload', keys: ['r'] },
+		{ name: 'scopeSwap', keys: ['t'] }
+	];
 </script>
 
 <main>
@@ -25,6 +30,9 @@
 	<pre>
   <code>npm i -D svelte-kbc</code>
 </pre>
+	<KeyboardControls config={customConfig}>
+		<TestingCustom config={customConfig} />
+	</KeyboardControls>
 	<KeyboardControls config={alphaConfig()}>
 		<TestingAlphaConfig config={alphaConfig()} />
 	</KeyboardControls>
@@ -46,5 +54,4 @@
 		min-height: 125vh;
 		font-family: Tahoma, sans-serif;
 	}
-
 </style>
