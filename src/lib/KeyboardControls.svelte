@@ -1,17 +1,31 @@
 <script lang="ts">
 	import { BROWSER } from 'esm-env';
 	import { setContext, getContext, onDestroy, tick } from 'svelte';
-	import { writable, } from 'svelte/store';
-	import type { KeyboardControl } from './models';
+	import { writable } from 'svelte/store';
+	import type { Controls, ControlsContext, KeyboardControl } from './models';
 
 	export let config: KeyboardControl[] = [];
 	export let eventProperty: keyof KeyboardEvent = 'key';
 	export let debug: boolean = false;
 
-	setContext<any>('threlte-keyboard-controls', {
+	type ObjectFromList<T extends ReadonlyArray<string>, V = string> = {
+		[K in T extends ReadonlyArray<infer U> ? U : never]: V;
+	};
+
+	const list = ['w', 'a', 's'] as const;
+
+	const actionNames = config.map((k) => k.name);
+
+	const obj: ObjectFromList<typeof list> = {
+		a: '',
+		s: '',
+		w: ''
+	};
+
+	setContext<ControlsContext>('threlte-keyboard-controls', {
 		controls: {}
 	});
-	let { controls } = getContext<any>('threlte-keyboard-controls');
+	let { controls } = getContext<ControlsContext>('threlte-keyboard-controls');
 
 	let keycodeToControlName: any = {};
 	let eventToControlName: any = {};
@@ -44,6 +58,8 @@
 			}
 			controls[control.name] = writable(false);
 		}
+
+		console.log(controls);
 	}
 
 	function updateKeyboardControls(controlName: string, status: boolean, event: any = null) {
