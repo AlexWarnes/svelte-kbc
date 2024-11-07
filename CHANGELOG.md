@@ -1,5 +1,11 @@
 # svelte-kbc
 
+## 0.3.0
+
+### Minor Changes
+
+- 06eef67: Update to Svelte 5 and runify context
+
 ## 0.1.1
 
 ### Patch Changes
