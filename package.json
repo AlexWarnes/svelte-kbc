@@ -1,6 +1,6 @@
 {
 	"name": "svelte-kbc",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -51,5 +51,9 @@
 		"type": "git",
 		"url": "git+https://github.com/AlexWarnes/svelte-kbc.git"
 	},
-	"keywords": ["svelte","keyboard","hotkeys"]
+	"keywords": [
+		"svelte",
+		"keyboard",
+		"hotkeys"
+	]
 }
