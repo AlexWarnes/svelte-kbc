@@ -1,17 +1,26 @@
 <script lang="ts">
 	import { BROWSER } from 'esm-env';
-	import { setContext, getContext, onDestroy, tick } from 'svelte';
-	import { writable, } from 'svelte/store';
-	import type { KeyboardControl } from './models';
+	import { setContext, onDestroy, } from 'svelte';
+	import type { KeyboardControl } from './models.ts';
+	import { json } from '@sveltejs/kit';
 
-	export let config: KeyboardControl[] = [];
-	export let eventProperty: keyof KeyboardEvent = 'key';
-	export let debug: boolean = false;
+	// export let config: KeyboardControl[] = [];
+	// export let eventProperty: keyof KeyboardEvent = 'key';
+	// export let debug: boolean = false;
 
-	setContext<any>('threlte-keyboard-controls', {
-		controls: {}
-	});
-	let { controls } = getContext<any>('threlte-keyboard-controls');
+	let { 
+		config = [],
+		eventProperty = 'key',
+		debug = false,
+		children
+	}: {
+		config: KeyboardControl[],
+		eventProperty?: keyof KeyboardEvent,
+		debug?: boolean,
+		children: any
+	} = $props();
+	let kbc: Record<string, boolean | Event> = $state({})
+	setContext<any>('kbc-context', kbc);
 
 	let keycodeToControlName: any = {};
 	let eventToControlName: any = {};
@@ -42,20 +51,20 @@
 					}
 				}
 			}
-			controls[control.name] = writable(false);
+			kbc[control.name] = false;
 		}
 	}
 
 	function updateKeyboardControls(controlName: string, status: boolean, event: any = null) {
-		if (controls[controlName]) {
+		if (controlName in kbc) {
 			if (status && event) event.preventDefault();
 
-			controls[controlName].set(status ? event : false);
+			kbc[controlName] = status ? event : false;
 		}
 	}
 	function updateEventControls(controlName: string, event: boolean | Event) {
-		if (controls[controlName]) {
-			controls[controlName].set(event);
+		if (controlName in kbc) {
+			kbc[controlName] = event;
 			debounceEventNullification(controlName);
 		}
 	}
@@ -68,7 +77,7 @@
 
 		eventTimerIDs[controlName] = setTimeout(() => {
 			// the eventStore shouldn't "store" the latest event
-			controls[controlName].set(false);
+			kbc[controlName] = false;
 		}, 50);
 	}
 
@@ -116,19 +125,24 @@
 		Object.values(eventTimerIDs).forEach((id: any) => clearTimeout(id));
 	});
 
-	$: initControls(config);
-	$: metaWarning(config);
+	$effect(() => {
+		initControls(config);
+		metaWarning(config);
+	})
 </script>
 
 <svelte:window
-	on:keydown={(evt) => handleKeys(evt, true)}
-	on:keyup={(evt) => handleKeys(evt, false)}
-	on:click={(evt) => handleEvent(evt)}
-	on:pointerdown={(evt) => handleEvent(evt)}
-	on:pointerup={(evt) => handleEvent(evt)}
-	on:touchstart={(evt) => handleEvent(evt)}
-	on:touchend={(evt) => handleEvent(evt)}
-	on:scroll={(evt) => handleEvent(evt)}
+	onkeydown={(evt) => handleKeys(evt, true)}
+	onkeyup={(evt) => handleKeys(evt, false)}
+	onclick={(evt) => handleEvent(evt)}
+	onpointerdown={(evt) => handleEvent(evt)}
+	onpointerup={(evt) => handleEvent(evt)}
+	ontouchstart={(evt) => handleEvent(evt)}
+	ontouchend={(evt) => handleEvent(evt)}
+	onscroll={(evt) => handleEvent(evt)}
 />
 
-<slot />
+<pre>
+<!-- {JSON.stringify(kbc, null, 2)} -->
+</pre>
+{@render children()}

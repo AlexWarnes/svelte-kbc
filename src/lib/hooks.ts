@@ -1,6 +1,8 @@
 import { getContext } from 'svelte'
 
-export const useKeyboardControls = () => {
-	const { controls } = getContext<any>('threlte-keyboard-controls');
-  return controls
+export const useKbc = () => {
+	// const { controls } = getContext<any>('kbc-context');
+  // return controls
+  return getContext<any>('kbc-context')
 }
+

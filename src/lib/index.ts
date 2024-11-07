@@ -1,25 +1,25 @@
 import KeyboardControls from './KeyboardControls.svelte';
-import { useKeyboardControls } from './hooks';
-import { wasdConfig, alphaConfig, numericConfig } from './keyConfigs';
-import { readableEvent } from './creators';
+import { useKbc } from './hooks.ts';
+import { wasdConfig, alphaConfig, numericConfig } from './keyConfigs.ts';
+import { readableEvent } from './creators.ts';
 import type {
 	KeyConfig,
 	KeyboardControl,
 	WASDNameMap,
 	AlphaNameMap,
 	NumericNameMap
-} from './models';
+} from './models.ts';
 
 export {
 	KeyboardControls,
-	useKeyboardControls,
-	KeyboardControl,
-	KeyConfig,
+	useKbc,
+	type KeyboardControl,
+	type KeyConfig,
 	wasdConfig,
 	alphaConfig,
 	numericConfig,
 	readableEvent,
-	WASDNameMap,
-	AlphaNameMap,
-	NumericNameMap
+	type WASDNameMap,
+	type AlphaNameMap,
+	type NumericNameMap
 };
