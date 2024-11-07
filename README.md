@@ -1,6 +1,6 @@
 # svelte-kbc
 
-Configure stores for keyboard inputs and events in any Svelte app.
+Configure a rune for keyboard inputs and events in any Svelte app.
 
 [Example on StackBlitz](https://stackblitz.com/edit/example-svelte-kbc?file=README.md) 
 
@@ -12,32 +12,45 @@ Configure stores for keyboard inputs and events in any Svelte app.
 const config = [
   // individual key presses
   { name: 'forward', keys: ['ArrowUp', 'w', 'W'] },
-  { name: 'jump', keys: [' '] },
+  { name: 'jump', keys: [' ', 'Space'] },
   { name: 'click', events: ['click'] },
 ]
 ```
 **Note:**  _Only certain events are currently supported. See `KbcEvent` types below._
 
-2. Wrap your application (or a part of your application) in `<KeyboardControls />` to create a context from your config. Any child component can then subscribe to the control stores with the names you provided.
+2. Wrap your application (or a part of your application) in `<KeyboardControls />` to create a context from your config. Any child component can then access the control rune with the names you provided.
 
 ```html
 <KeyboardControls {config}>
-  <!-- Anything in here can access the control stores 'forward', 'jump', 'click' -->
+  <!-- Anything in here can access the control rune with properties 'forward', 'jump', 'click' -->
   <BrowserGame />
 </KeyboardControls>
 ```
 
-3. In a child component, the `useKeyboardControls()` hook will return all your controls as stores. From there, handle the events however you need to:
+3. In a child component, the `useKbc()` hook will return the controls rune, with the properties set in the config. From there, handle the events however you need to:
 
 ```js
-  const { forward, jump, click } = useKeyboardControls();
+  const kbc = useKbc();
 
-  $: if ($forward) handleMoveForward();
-  $: if ($jump && $click) handleJumpClick();
-  $: if ($click) processClickEvent($click)
+  $effect(() => {
+    if (kbc.forward) handleMoveForward()
+    if (kbc.forward && kbc.jump) handleForwardJump()
+    if (kbc.click) handleClickThings()
+  })
+ ```
+
+Alternatively, you can destructure the control rune and maintain reactivity using $derived:
+```js
+const { forward, jump, click } = $derived(useKbc());
+
+$effect(() => {
+  if (forward) handleMoveForward()
+  if (forward && jump) handleForwardJump()
+  if (click) handleClickThings()
+})
+
 ```
-
-**Note:** Both key and event control stores will emit their respective `event` objects when they occur (or when they are "pressed"), otherwise they will emit `false`.
+**Note:** The keys and events will "emit" their respective `event` objects when they occur, otherwise they will "emit" `false`
 
 # `<KeyboardControls />` Properties
 
@@ -140,7 +153,7 @@ Just pass in a name mapping object when you invoke the config:
 wasdConfig({ space: 'jump' })
 ```
 
-Now your control stores will be named `w, a, s, d, shift, jump`
+Now your control rune properties will be named `w, a, s, d, shift, jump`
 
 # Types
 

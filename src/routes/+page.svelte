@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { KeyboardControl } from '$lib';
-	import { readableEvent } from '$lib/creators';
 	import KeyboardControls from '$lib/KeyboardControls.svelte';
-	import { alphaConfig, numericConfig, wasdConfig } from '$lib/keyConfigs';
+	import { alphaConfig, numericConfig, wasdConfig } from '$lib/keyConfigs.ts';
+	import type { KeyboardControl } from '$lib/models.ts';
 	import TestingAlphaConfig from '$lib/Testing_alphaConfig.svelte';
 	import Testing_Events from '$lib/Testing_Events.svelte';
 	import TestingNumericConfig from '$lib/Testing_numericConfig.svelte';

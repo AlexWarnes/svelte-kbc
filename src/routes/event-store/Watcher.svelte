@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { useKeyboardControls } from '$lib';
+	import { useKbc } from '$lib';
 	import { readableEvent } from '$lib/creators';
 	import { wasdConfig } from '$lib/keyConfigs';
 	import TestingWasdConfig from '$lib/Testing_wasdConfig.svelte';
 	import { onMount } from 'svelte';
 
-	const { w, a, s, d, shift, space } = useKeyboardControls();
+	const { w, a, s, d, shift, space } = useKbc();
 
 	let pointerdown_aqua: any = null;
 	let pointerup_aqua: any = null;
