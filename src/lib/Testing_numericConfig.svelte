@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { useKbc } from './hooks.ts';
-	import type { KeyboardControl } from './models.ts';
+	import { useKbc } from './hooks.js';
+	import type { KeyboardControl } from './models.js';
 
 	let { config }: { config: KeyboardControl[] } = $props();
 	const kbc = useKbc();

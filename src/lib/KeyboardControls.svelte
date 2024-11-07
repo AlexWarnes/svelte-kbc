@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { BROWSER } from 'esm-env';
 	import { setContext, onDestroy, } from 'svelte';
-	import type { KeyboardControl } from './models.ts';
+	import type { KeyboardControl } from './models.js';
 	import { json } from '@sveltejs/kit';
 
 	// export let config: KeyboardControl[] = [];
